@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PH Tube | blog</title>
+	<link rel="icon" type="image/x-icon" href="./images/favicon.png">
+	<link href="https://cdn.jsdelivr.net/npm/daisyui@3.5.1/dist/full.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.tailwindcss.com"></script>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+	<style>
+		.font-inter {
+			font-family: 'Inter', sans-serif;
+		}
+
+		.active {
+			color: white;
+			font-weight: 600;
+			font-size: 2em;
+			background-color: #FF1F3D;
+		}
+	</style>
+</head>
+<body class="font-inter">
+	<header class="max-w-[1366px] mx-auto px-4">
+		<nav class="mt-10 flex bg-base-100 flex-col md:flex-row justify-between items-center gap-y-6">
+			<div class="">
+				<a href="./">
+					<img src="./images/Logo.png" alt="">
+				</a>
+			</div>
+			<div>
+				<a href="./blog.html" class="btn btn-neutral border-none text-white normal-case text-lg bg-[#FF1F3D] px-6">Blog</a>
+			</div>
+		</nav>
+		<div class="divider"></div>
+	</header>
+
+	<main class="max-w-[1366px] mx-auto px-4 mb-16">
+		<h1 class="text-center text-6xl mb-8 font-medium">Blog</h1>
+		<h2 class="text-center text-3xl mb-8 font-medium">Frequently Asked Questions</h2>
+		<section class="space-y-6">
+			<div class="bg-slate-100 p-6">
+				<h3 class="text-2xl font-medium"><span class="font-bold text-3xl">Q.</span> Discuss the scope of var, let, and const.</h3>
+				<h3 class="mt-4 text-2xl font-medium">
+				<span class="font-bold text-3xl">A.</span>
+				var has function scope and allows redeclaration. It's hoisted, which can lead to issues.<br>
+				let has block scope, doesn't allow redeclaration, and isn't hoisted. It's preferred for mutable variables.<br>
+				const also has block scope, doesn't allow reassignment (for primitives), and isn't hoisted. It's preferred for immutable variables.</h3>
+			</div>
+			<div class="bg-slate-100 p-6">
+				<h3 class="text-2xl font-medium"><span class="font-bold text-3xl">Q.</span> Tell us the use cases of null and undefined.</h3>
+				<h3 class="mt-4 text-2xl font-medium">
+				<span class="font-bold text-3xl">A.</span>
+				undefined is used to indicate the absence of a value or uninitialized variables.<br>
+				It's automatically assigned to variables with no value, function parameters without arguments, or when a function doesn't explicitly return a value.<br>
+				null is used to explicitly indicate the absence of a value or empty objects.<br>
+				It's typically assigned to variables or properties to represent intentional absence or emptiness.
+			</div>
+			<div class="bg-slate-100 p-6">
+				<h3 class="text-2xl font-medium"><span class="font-bold text-3xl">Q.</span> What do you mean by REST API?.</h3>
+				<h3 class="mt-4 text-2xl font-medium">
+				<span class="font-bold text-3xl">A.</span>
+				A REST API is an architectural approach for designing web services that use standard HTTP methods like GET (retrieve), POST (create), PUT (update), and DELETE (delete) to interact with resources identified by unique URLs. It's stateless, allowing for scalability, and supports various data representations like JSON or XML. It treats everything as a resource and organizes them using URLs.
+			</div>
+		</section>
+	</main>
+
+</body>
+</html>
