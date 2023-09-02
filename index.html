@@ -32,7 +32,7 @@
 				</a>
 			</div>
 			<div>
-				<a href="" class="btn normal-case text-lg font-medium">Sort by view</a>
+				<button onclick="sortByView()" class="btn normal-case text-lg font-medium">Sort by view</button>
 			</div>
 			<div>
 				<a href="./blog.html" class="btn btn-neutral border-none text-white normal-case text-lg bg-[#FF1F3D] px-6">Blog</a>
@@ -43,12 +43,7 @@
 
 	<main class="max-w-[1366px] mx-auto px-4 mb-16">
 		<section id="video-section">
-			<div class="mb-8 mt-6 flex flex-wrap gap-5 justify-center">
-				<button onclick="loadVideos(1000)" class="btn normal-case text-base font-medium rounded-md active">All</button>
-				<button onclick="loadVideos(1001)" class="btn normal-case text-base font-medium rounded-md">Music</button>
-				<button onclick="loadVideos(1003)" class="btn normal-case text-base font-medium rounded-md">Comedy</button>
-				<button onclick="loadVideos(1005)" class="btn normal-case text-base font-medium rounded-md">Drawing</button>
-			</div>
+			<div id="button-list" class="mb-8 mt-6 flex flex-wrap gap-5 justify-center"></div>
 			<div id="video-container"></div>
 		</section>
 	</main>

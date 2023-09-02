@@ -1,6 +1,52 @@
 let videos = [];
+let buttonsAdded = false;
 
-const loadVideos = async (categoryCode) => {
+const getCategoryCode = async (category) => {
+	const res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
+	const data = await res.json();
+	const categories = data.data;
+
+	// add all of the category buttons
+	if (!buttonsAdded) {
+		for (let i = 0; i < categories.length; i++) {
+				const name = categories[i].category;
+				addButton(name);
+		}
+		buttonsAdded = true;
+	}
+
+	// get code/slug for every category
+	for (let i = 0; i < categories.length; i++) {
+		const name = categories[i].category;
+		const id = categories[i].category_id;
+		if (name === category) {
+			loadCards(id);
+		}
+	}
+}
+
+const loadFirstCategory = async () => {
+	const res = await fetch("https://openapi.programming-hero.com/api/videos/categories");
+	const data = await res.json();
+	const categories = data.data;
+
+	const firstBtn = categories[0].category_id;
+	loadCards(firstBtn);
+}
+
+function addButton(name) {
+	const btnList = document.getElementById("button-list");
+	const btn = document.createElement("button");
+	btn.id = name;
+	btn.classList = "btn normal-case text-base font-medium rounded-md";
+	btn.onclick = function () {
+		getCategoryCode(name);
+	}
+	btn.innerHTML = `${name}`;
+	btnList.appendChild(btn);
+}
+
+const loadCards = async (categoryCode) => {
 	const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryCode}`);
 	const data = await res.json();
 	videos = data.data;
@@ -13,14 +59,12 @@ const displayVideos = (videos) => {
 	videoContainer.textContent = '';
 
 	if (videos.length === 0) {
-		// const videoSection = document.getElementById("video-section");
 		const emptyMsg = document.createElement("div");
 		emptyMsg.classList = "my-32 text-center";
 		emptyMsg.innerHTML = `
 			<img class="mx-auto" src="./images/Icon.png" alt="">
 			<h2 class="my-8 font-bold text-3xl text-[#171717]">Oops!! Sorry, There is no content here</h2>
 		`
-		// videoSection.appendChild(emptyMsg);
 		videoContainer.classList = "flex justify-center";
 		videoContainer.appendChild(emptyMsg);
 	}
@@ -52,7 +96,6 @@ const displayVideos = (videos) => {
 	}
 
 	videos.forEach(video => {
-		// console.log(video.title);
 		const videoCard = document.createElement('div');
 		videoCard.classList = `card shadow hover:shadow-xl transition`;
 		videoCard.innerHTML = `
@@ -73,8 +116,19 @@ const displayVideos = (videos) => {
 		`
 		videoContainer.classList = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5";
 		videoContainer.appendChild(videoCard);
-	})
+	});
 }
 
-// load the All category by default
-loadVideos(1000);
+function sortByView() {
+	videos.sort(function (p1, p2) {
+		let views1 = p1.others.views.slice(0, -1);
+		views1 = parseFloat(views1);
+		let views2 = p2.others.views.slice(0, -1);
+		views2 = parseFloat(views2);
+		return (views1 < views2) ? 1 : (views1 > views2) ? -1 : 0
+	});
+	displayVideos(videos);
+}
+
+loadFirstCategory();
+getCategoryCode();
