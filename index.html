@@ -42,15 +42,14 @@
 	</header>
 
 	<main class="max-w-[1366px] mx-auto px-4 mb-16">
-		<section>
+		<section id="video-section">
 			<div class="mb-8 mt-6 flex flex-wrap gap-5 justify-center">
-				<a class="btn normal-case text-base font-medium rounded-md active" href="#">All</a>
-				<a class="btn normal-case text-base font-medium rounded-md" href="#">Music</a>
-				<a class="btn normal-case text-base font-medium rounded-md" href="#">Comedy</a>
-				<a class="btn normal-case text-base font-medium rounded-md" href="#">Drawing</a>
+				<button onclick="loadVideos(1000)" class="btn normal-case text-base font-medium rounded-md active">All</button>
+				<button onclick="loadVideos(1001)" class="btn normal-case text-base font-medium rounded-md">Music</button>
+				<button onclick="loadVideos(1003)" class="btn normal-case text-base font-medium rounded-md">Comedy</button>
+				<button onclick="loadVideos(1005)" class="btn normal-case text-base font-medium rounded-md">Drawing</button>
 			</div>
-			<div id="video-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5">
-			</div>
+			<div id="video-container"></div>
 		</section>
 	</main>
 

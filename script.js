@@ -1,13 +1,29 @@
-const loadVideos = async () => {
-	const res = await fetch("https://openapi.programming-hero.com/api/videos/category/1000");
+let videos = [];
+
+const loadVideos = async (categoryCode) => {
+	const res = await fetch(`https://openapi.programming-hero.com/api/videos/category/${categoryCode}`);
 	const data = await res.json();
-	const videos = data.data;
-	console.log(videos);
+	videos = data.data;
 	displayVideos(videos);
 }
 
 const displayVideos = (videos) => {
 	const videoContainer = document.getElementById("video-container");
+
+	videoContainer.textContent = '';
+
+	if (videos.length === 0) {
+		// const videoSection = document.getElementById("video-section");
+		const emptyMsg = document.createElement("div");
+		emptyMsg.classList = "my-32 text-center";
+		emptyMsg.innerHTML = `
+			<img class="mx-auto" src="./images/Icon.png" alt="">
+			<h2 class="my-8 font-bold text-3xl text-[#171717]">Oops!! Sorry, There is no content here</h2>
+		`
+		// videoSection.appendChild(emptyMsg);
+		videoContainer.classList = "flex justify-center";
+		videoContainer.appendChild(emptyMsg);
+	}
 
 	function isVerified(video) {
 		if (video.authors[0]?.verified) {
@@ -18,8 +34,8 @@ const displayVideos = (videos) => {
 	}
 
 	function postDate(video) {
-		function toHoursAndMinutes(totalSeconds) {
-			const totalMinutes = Math.floor(totalSeconds / 60);
+		function convertTime(seconds) {
+			const totalMinutes = Math.floor(seconds / 60);
 			const hours = Math.floor(totalMinutes / 60);
 			const minutes = totalMinutes % 60;
 			return `${hours}hrs ${minutes} min ago`;
@@ -27,7 +43,7 @@ const displayVideos = (videos) => {
 		if (video.others?.posted_date) {
 			return `
 				<p class="absolute bottom-3 right-3 bg-[#171717] text-white text-xs p-1 rounded-md">
-					${toHoursAndMinutes(video.others.posted_date)}
+					${convertTime(video.others.posted_date)}
 				</p>
 			`
 		} else {
@@ -36,22 +52,29 @@ const displayVideos = (videos) => {
 	}
 
 	videos.forEach(video => {
-		console.log(video.title);
+		// console.log(video.title);
 		const videoCard = document.createElement('div');
 		videoCard.classList = `card shadow hover:shadow-xl transition`;
 		videoCard.innerHTML = `
 			<figure class="h-full lg:h-48 relative">
 				<img class="h-full w-full" src="${video.thumbnail}" alt=""/>
-				${postDate(video)};
+				${postDate(video)}
 			</figure>
-			<div class="card-body">
-				<h2 class="card-title font-bold">${video.title}</h2>
-				<p class="text-[#171717B2]">${video.authors[0].profile_name} ${isVerified(video)}</p>
-				<p class="text-[#171717B2] leading-5">${video.others?.views} views</p>
+			<div class="card-body p-6">
+				<div class="flex gap-3">
+					<img class="w-10 h-10 rounded-full object-cover" src="${video.authors[0].profile_picture}" alt="">
+					<div>
+						<h2 class="card-title font-bold">${video.title}</h2>
+						<p class="text-[#171717B2] my-2">${video.authors[0].profile_name} ${isVerified(video)}</p>
+						<p class="text-[#171717B2] leading-5">${video.others?.views} views</p>
+					</div>
+				</div>
 			</div>
 		`
+		videoContainer.classList = "grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5";
 		videoContainer.appendChild(videoCard);
 	})
 }
 
-loadVideos();
+// load the All category by default
+loadVideos(1000);
